@@ -1,12 +1,13 @@
 - payload.primary_resources.each do |story|
   %p
-    #{payload.performed_by.name} #{payload.highlight} story
+    #{payload.performed_by.name} #{payload.highlight} #{story.story_type ? 'story' : story.kind}
 
     %a{href: story.url}
       %span.story-id ##{story.id}
 
-    = succeed Haml::Util.html_safe('&nbsp;') do
-      %img(width=14 height=14){src: hook_image_url("icons/#{story.story_type}.png")}
+    - if story.story_type # epic has no `story_type`.
+      = succeed Haml::Util.html_safe('&nbsp;') do
+        %img(width=14 height=14){src: hook_image_url("icons/#{story.story_type}.png")}
 
     %b>= story.name
 
